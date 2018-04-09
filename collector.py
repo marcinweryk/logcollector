@@ -37,6 +37,7 @@ result = find('*.log*', 'C:\mytestdirectory')
 #updresult = ' '.join(map(str,result))
 #print(updresult, os.path.getsize(updresult))
 
+#open fiel to save
 f = open('logfileslist.txt','w')
 
 for files in result:
