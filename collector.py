@@ -1,4 +1,5 @@
 import os, fnmatch
+import time
 
 # this will show the first match for search
 def find(name, path):
@@ -25,11 +26,22 @@ def find(pattern, path):
     return result
 
 def convertbyte(sizeinbbyte):
-    sizeinmb = 
+    sizeinmb = sizeinbbyte/1024/1024
+    return sizeinmb
 
-result = find('*.log', 'C:\impact360')
-listoffiles = '\n'.join(map(str,result))
-#print('\n'.join(map(str,result)))
+#find all the log in the directory
+result = find('*.log*', 'C:\mytestdirectory')
+
+# Some tests for single file below
+#listoffiles = '\n'.join(map(str,result))
+#updresult = ' '.join(map(str,result))
+#print(updresult, os.path.getsize(updresult))
+
+
 for files in result:
-    print('File: ', files, os.path.getsize(files))
+    print('File: ', files, ("%.2f" % convertbyte(os.path.getsize(files))), 'MB', '( Last modified:' ,time.ctime(os.path.getmtime(files)),')')
+
+
+
+
 
