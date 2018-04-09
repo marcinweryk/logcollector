@@ -40,6 +40,7 @@ result = find('*.log*', 'C:\mytestdirectory')
 #open fiel to save
 f = open('logfileslist.txt','w')
 
+# all results per line are saved in the file
 for files in result:
     print('File: ', files, ("%.2f" % convertbyte(os.path.getsize(files))), 'MB', '( Last modified:' ,time.ctime(os.path.getmtime(files)),')')
     filelinef = ("File: {}, {} MB, Last modified: {} \n".format(files,("%.2f" % convertbyte(os.path.getsize(files))), time.ctime(os.path.getmtime(files)) ))
