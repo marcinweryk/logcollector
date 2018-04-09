@@ -37,9 +37,13 @@ result = find('*.log*', 'C:\mytestdirectory')
 #updresult = ' '.join(map(str,result))
 #print(updresult, os.path.getsize(updresult))
 
+f = open('logfileslist.txt','w')
 
 for files in result:
     print('File: ', files, ("%.2f" % convertbyte(os.path.getsize(files))), 'MB', '( Last modified:' ,time.ctime(os.path.getmtime(files)),')')
+    filelinef = ("File: {}, {} MB, Last modified: {} \n".format(files,("%.2f" % convertbyte(os.path.getsize(files))), time.ctime(os.path.getmtime(files)) ))
+    f.write(str(filelinef))
+f.close()
 
 
 
