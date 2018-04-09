@@ -28,21 +28,12 @@ def convertbyte(sizeinbbyte):
     sizeinmb = sizeinbbyte/1024/1024
     return sizeinmb
 
-#find all the log type files in the directory
-result = find('*.log*', 'C:\mytestdirectory')
+def getsizeoffile(file):
+    sizeoffile = os.path.getsize(file)
+    return sizeoffile
 
-#open file to save the results of search
-f = open('logfileslist.txt','w')
-
-# all results per line are saved in the file
-for files in result:
-    print('File: ', files, ("%.2f" % convertbyte(os.path.getsize(files))), 'MB', '( Last modified:' ,time.ctime(os.path.getmtime(files)),')')
-    filelinef = ("File: {}, {} MB, Last modified: {} \n".format(files,("%.2f" % convertbyte(os.path.getsize(files))), time.ctime(os.path.getmtime(files)) ))
-    f.write(str(filelinef))
-#close the file
-f.close()
-
-
-
+def getlastmoddate(file):
+    lastmodtime = time.ctime(os.path.getmtime(file))
+    return lastmodtime
 
 
