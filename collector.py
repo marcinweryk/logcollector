@@ -15,7 +15,7 @@ def find_all(name, path):
             result.append(os.path.join(root, name))
     return result
 
-# this will show match for specific patern
+# this will show match for specific pattern
 def find(pattern, path):
     result = []
     for root, dirs, files in os.walk(path):

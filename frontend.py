@@ -1,5 +1,12 @@
 import collector
+from tkinter import *
 
+master = Tk()
+
+listbox = Listbox(master, width=120, height=20)
+listbox.pack()
+
+listbox.insert(END, "List of log files:")
 
 #find all the log type files in the directory
 result = collector.find('*.log', 'C:\mytestdirectory')
@@ -9,8 +16,10 @@ f = open('logfileslist.txt','w')
 
 # all results per line are saved in the file
 for files in result:
-    #print("File: {}, {} MB, Last modified: {}".format(files,("%.2f" % collector.convertbyte(collector.getsizeoffile(files))), collector.getlastmoddate(files) ))
-    filelinef = ("File: {}, {} MB, Last modified: {} \n".format(files,("%.2f" % collector.convertbyte(collector.getsizeoffile(files))), collector.getlastmoddate(files) ))
+    filelinef = ("File: {} | size: {} MB | Last modified: {} \n".format(files,("%.2f" % collector.convertbyte(collector.getsizeoffile(files))), collector.getlastmoddate(files) ))
     f.write(str(filelinef))
+    listbox.insert(END, filelinef)
 #close the file
 f.close()
+
+mainloop()
