@@ -37,7 +37,7 @@ def save():
     for files in result:
         filelinef = ("File: {} | size: {} MB | Last modified: {} \n".format(files,("%.2f" % collector.convertbyte(collector.getsizeoffile(files))), collector.getlastmoddate(files) ))
         f.write(str(filelinef))
-    listbox.insert(END, "Saved")
+    listbox.insert(END, "Saved file logfileslist.txt")
     f.close()
 
 button1 = Button(text="Search", command=searchforme)
