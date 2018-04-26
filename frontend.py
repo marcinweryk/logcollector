@@ -4,11 +4,10 @@ from tkinter import filedialog
 import traceback
 import logging
 
-###################log info #########################
+###############log ######################
 logging.basicConfig(filename='collector.log', level=logging.DEBUG, format='%(message)s %(asctime)s')
 logging.info('Started')
-############### log start ######################
-
+###############log ######################
 
 master = Tk()
 master.resizable(FALSE,FALSE)
@@ -44,23 +43,21 @@ def searchforme():
         listbox.config(width=max(sizeOfWin))
     except:
         listbox.insert(END, "No results - Check provided file name and path !")
-        logging.exception("Error in the application")
+        logging.exception("Error search function ")
 
 def file_save():
-    """get a filename and save the text in the editor widget"""
-    # default extension is optional, here will add .txt if missing
-    print(listbox.get(ACTIVE))
-    result = listbox.get(ACTIVE)
-    print(result)
-    mask = \
-        [("Text files", "*.txt"),
-         ("CSV","*.csv"),
-         ("All files", "*.*")]
-    fout = filedialog.asksaveasfile(mode='w', defaultextension=mask ,filetypes=mask)
-    for files in result:
-        text2save = ("File: {} | size: {} MB | Last modified: {} \n".format(files,("%.2f" % collector.convertbyte(collector.getsizeoffile(files))), collector.getlastmoddate(files) ))
-        fout.write(text2save)
-    fout.close()
+    try:
+        result = listbox.get(0, END)
+        mask = \
+            [("Text files", "*.txt"),
+            ("CSV","*.csv"),
+            ("All files", "*.*")]
+        fout = filedialog.asksaveasfile(mode='w', defaultextension=".txt" ,filetypes=mask)
+        for files in result:
+            fout.write(files)
+        fout.close()
+    except:
+        logging.exception("Error saving file ")
 
 def do_exit():
     master.destroy()
