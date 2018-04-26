@@ -15,9 +15,19 @@ listbox.insert(END, "Click search to look for logs")
 
 scrollbar.config(command=listbox.yview)
 
+e = Entry(master)
+e.insert(END, "*.log")
+e.pack()
+e1 = Entry(master)
+e1.insert(END, "c:\FolderName")
+e1.pack()
+
 def searchforme():
     # find all the log type files in the directory
-    result = collector.find('*.log', 'C:\mytestdirectory')
+    #default values '*.log', 'c:\foldername'
+    file = e.get()
+    path = e1.get()
+    result = collector.find(file, path)
     listbox.delete(0,END)
     # all results per line are shown on the screen
     for files in result:
