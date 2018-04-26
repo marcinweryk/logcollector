@@ -1,8 +1,8 @@
 import collector
 from tkinter import *
 from tkinter import filedialog
-import traceback
 import logging
+from shutil import copyfile
 
 ###############log ######################
 logging.basicConfig(filename='collector.log', level=logging.DEBUG, format='%(message)s %(asctime)s')
@@ -45,7 +45,7 @@ def searchforme():
         listbox.insert(END, "No results - Check provided file name and path !")
         logging.exception("Error search function ")
 
-def file_save():
+def save_list():
     try:
         result = listbox.get(0, END)
         mask = \
@@ -55,6 +55,19 @@ def file_save():
         fout = filedialog.asksaveasfile(mode='w', defaultextension=".txt" ,filetypes=mask)
         for files in result:
             fout.write(files)
+        fout.close()
+    except:
+        logging.exception("Error saving file ")
+
+def save_files():
+    #copyfile("src", "dst")
+    try:
+        result = listbox.get(0, END)
+        fout = filedialog.askdirectory()
+        print(fout)
+        for files in result:
+            copyfile(files, fout)
+            print(files)
         fout.close()
     except:
         logging.exception("Error saving file ")
@@ -69,7 +82,9 @@ master.config(menu=menu)
 # file menu
 filemenu = Menu(menu, tearoff=0)
 menu.add_cascade(label="Options", menu=filemenu)
-filemenu.add_command(label="Save", command=file_save)
+filemenu.add_command(label="Save the list", command=save_list)
+filemenu.add_separator()
+filemenu.add_command(label="Save the files", command=save_files)
 filemenu.add_separator()
 filemenu.add_command(label="Exit", command=do_exit)
 master.protocol("WM_DELETE_WINDOW", master.quit())
