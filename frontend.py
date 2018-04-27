@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 import logging
 from shutil import copyfile
+import shutil
 
 ###############log ######################
 logging.basicConfig(filename='collector.log', level=logging.DEBUG, format='%(message)s %(asctime)s')
@@ -37,7 +38,7 @@ def searchforme():
         sizeOfWin = []
         # all results per line are shown on the screen
         for files in result:
-            filelinef = ("File: {} | size: {} MB | Last modified: {} \n".format(files,("%.2f" % collector.convertbyte(collector.getsizeoffile(files))), collector.getlastmoddate(files) ))
+            filelinef = ("{} | size: {} MB | Last modified: {} \n".format(files,("%.2f" % collector.convertbyte(collector.getsizeoffile(files))), collector.getlastmoddate(files) ))
             listbox.insert(END, filelinef)
             sizeOfWin.append(len(filelinef))
         listbox.config(width=max(sizeOfWin))
@@ -52,23 +53,20 @@ def save_list():
             [("Text files", "*.txt"),
             ("CSV","*.csv"),
             ("All files", "*.*")]
-        fout = filedialog.asksaveasfile(mode='w', defaultextension=".txt" ,filetypes=mask)
+        fsav = filedialog.asksaveasfile(mode='w', defaultextension=".txt" ,filetypes=mask)
         for files in result:
-            fout.write(files)
-        fout.close()
+            fsav.write(files)
+        fsav.close()
     except:
         logging.exception("Error saving file ")
 
 def save_files():
-    #copyfile("src", "dst")
     try:
         result = listbox.get(0, END)
-        fout = filedialog.askdirectory()
-        print(fout)
+        fdir = filedialog.askdirectory()
         for files in result:
-            copyfile(files, fout)
-            print(files)
-        fout.close()
+            sourcefile = files.split('|')[0]
+            shutil.copy(sourcefile, fdir)
     except:
         logging.exception("Error saving file ")
 
